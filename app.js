@@ -11,6 +11,12 @@ var options = {
     format: 'Letter'
 };
 
+//Module Imports
+const Employee = require("./lib/Employee.js");
+const Engineer = require("./lib/Engineer.js");
+const Intern = require("./lib/Intern.js");
+const Manager = require("./lib/Manager.js");
+
 // Sets up the Express App
 // =============================================================
 const app = express();
@@ -22,3 +28,30 @@ app.use(express.json());
 
 //Employees DATA
 const employees = [];
+
+
+function promptUser() {
+    return inquirer.prompt([{
+            type: "input",
+            name: "name",
+            text: "Enter employee name"
+        },
+        {
+            type: "input",
+            name: "id",
+            text: "Enter employee ID"
+        },
+        {
+            type: "input",
+            name: "email",
+            text: "Enter employee email"
+        },
+        {
+            type: "input",
+            name: "role",
+            text: "Enter employee role"
+        }
+    ]);
+};
+
+promptUser();
