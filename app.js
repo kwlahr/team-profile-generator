@@ -50,16 +50,17 @@ const promptUser = () => {
       },
       {
         type: "list",
-        name: "position",
+        name: "role",
         message: "What's Your Position At The Company?",
         choices: ["Manager", "Engineer", "Intern"]
       }
     ])
-    .then(async function(data) {
+    .then(function(data) {
+      let id = 0;
       id = id + 1;
       switch (data.role) {
         case "Manager":
-          await inquirer
+           inquirer
             .prompt([
               {
                 type: "input",
@@ -77,10 +78,12 @@ const promptUser = () => {
                 "Manager"
               );
               employees.push(manager);
-            });
+            }).then(function(){
+              addNext()
+              });
           break;
         case "Engineer":
-          await inquirer
+           inquirer
             .prompt([
               {
                 type: "input",
@@ -98,10 +101,12 @@ const promptUser = () => {
                 "Engineer"
               );
               employees.push(engineer);
-            });
+            }).then(function(){
+              addNext()
+              });
           break;
         case "Intern":
-          await inquirer
+           inquirer
             .prompt([
               {
                 type: "input",
@@ -119,12 +124,13 @@ const promptUser = () => {
                 "Intern"
               );
               employees.push(intern);
-            });
+            }).then(function(){
+              addNext()
+              });
           break;
       }
     })
     .then(function() {
-      addNext();
     });
 };
 
