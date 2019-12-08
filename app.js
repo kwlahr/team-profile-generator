@@ -16,7 +16,7 @@ const Employee = require("./lib/Employee.js");
 const Engineer = require("./lib/Engineer.js");
 const Intern = require("./lib/Intern.js");
 const Manager = require("./lib/Manager.js");
-const generateHTML = require("./output/generateHTML");
+const generateHTML = require("./output/generateHTML.js");
 
 // Sets up the Express App
 // =============================================================
@@ -56,12 +56,15 @@ const promptUser = () => {
       }
     ])
     .then(function(data) {
-      let id = 0;
-      id = id + 1;
       switch (data.role) {
         case "Manager":
            inquirer
             .prompt([
+              {
+                type: "input",
+                message: "Enter employee ID: ",
+                name: "id"
+              },
               {
                 type: "input",
                 message: "Enter office number: ",
@@ -70,13 +73,15 @@ const promptUser = () => {
             ])
             .then(function(res) {
               const officeNum = res.office;
+              console.log(officeNum);
               const manager = new Manager(
                 data.name,
-                data.id,
+                res.id,
                 data.email,
                 officeNum,
                 "Manager"
               );
+              console.log(manager);
               employees.push(manager);
             }).then(function(){
               addNext()
@@ -87,6 +92,11 @@ const promptUser = () => {
             .prompt([
               {
                 type: "input",
+                message: "Enter employee ID: ",
+                name: "id"
+              },
+              {
+                type: "input",
                 message: "Enter github username: ",
                 name: "github"
               }
@@ -95,7 +105,7 @@ const promptUser = () => {
               const githubName = res.github;
               const engineer = new Engineer(
                 data.name,
-                data.id,
+                res.id,
                 data.email,
                 githubName,
                 "Engineer"
@@ -110,6 +120,11 @@ const promptUser = () => {
             .prompt([
               {
                 type: "input",
+                message: "Enter employee ID: ",
+                name: "id"
+              },
+              {
+                type: "input",
                 message: "Enter school: ",
                 name: "school"
               }
@@ -118,7 +133,7 @@ const promptUser = () => {
               const internSchool = res.school;
               const intern = new Intern(
                 data.name,
-                data.id,
+                res.id,
                 data.email,
                 internSchool,
                 "Intern"
@@ -154,11 +169,12 @@ const addNext = () => {
     });
 };
 
-async function completedRoster(employees){
+function completedRoster(employees){
     console.log("Success!");
     console.log(employees);
-    const html = await generateHTML(employees);
-    writeFileAsync("./output/employees.html", html);
+    const html = generateHTML(employees);
+    console.log(html);
+    writeFileAsync("./output/employees.html", html, "utf-8");
 }
 
 function init(){
@@ -169,7 +185,3 @@ function init(){
 init();
 
 // require("./output/employees.html")(app);
-
-app.listen(PORT, function() {
-  console.log(`App listening on PORT ${PORT}`);
-});

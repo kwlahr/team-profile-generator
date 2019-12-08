@@ -56,6 +56,7 @@ function makeCards(data) {
     .join("\n");
 }
 function makeManagerCard(x) {
+  console.log(x);
   let mangerCard = `
   <li>
   <div class="col-md-3">
@@ -78,7 +79,7 @@ function makeManagerCard(x) {
         </div>
         <div class="form-group">
             <label for="reserve-phone" id="reserve-office-number">Office Number: ${
-              x.office
+              x.officeNumber
             }</label>					
         </div>				
         </form>
